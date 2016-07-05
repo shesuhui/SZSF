@@ -12,6 +12,7 @@ import pymysql
 import uuid
 import migrateorgunit
 import migraterole
+import migrateuser
 
 
 
@@ -43,6 +44,8 @@ def main():
 		#syn role
 		role=migraterole.RoleMigration(aps_conn,ausp_conn)
 		role.doMigration()
+		user=migrateuser.UserMigration(aps_conn, ausp_conn)
+		user.doMigration()
 	except Exception, e:
 		raise e
 	finally:
