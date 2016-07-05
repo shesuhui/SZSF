@@ -1,0 +1,447 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"ausp",
+				"ausp_conn"
+			],
+			[
+				"aps",
+				"aps_cur"
+			],
+			[
+				"try",
+				"try	Try/Except/Finally"
+			],
+			[
+				"mig",
+				"migraterole"
+			],
+			[
+				"ins",
+				"insertData"
+			],
+			[
+				"inser",
+				"insertSql"
+			],
+			[
+				"inse",
+				"insertSql"
+			],
+			[
+				"def",
+				"def	Function"
+			],
+			[
+				"seq",
+				"seq"
+			],
+			[
+				"au",
+				"ausp_parent_code"
+			],
+			[
+				"org",
+				"org_code"
+			],
+			[
+				"parent",
+				"ausp_parent_code"
+			],
+			[
+				"ausp_paren",
+				"ausp_parent_code"
+			],
+			[
+				"cur",
+				"cursor"
+			],
+			[
+				"str",
+				"str"
+			],
+			[
+				"db",
+				"db_conn"
+			],
+			[
+				"ex",
+				"execute"
+			],
+			[
+				"no",
+				"None"
+			],
+			[
+				"cu",
+				"cursor"
+			],
+			[
+				"assert",
+				"assert_nil"
+			],
+			[
+				"ass",
+				"assert_equal"
+			],
+			[
+				"app",
+				"append〔function〕"
+			],
+			[
+				"ap",
+				"append"
+			],
+			[
+				"son",
+				"SongList〔module〕"
+			],
+			[
+				"rq",
+				"require"
+			],
+			[
+				"u",
+				"unit〔module〕"
+			],
+			[
+				"req",
+				"require〔function〕"
+			],
+			[
+				"te",
+				"TestCase"
+			],
+			[
+				"Qe",
+				"QuestionAdmin"
+			],
+			[
+				"d",
+				"django"
+			],
+			[
+				"date",
+				"datetime"
+			],
+			[
+				"pub",
+				"pub_date"
+			],
+			[
+				"chi",
+				"choice_text"
+			],
+			[
+				"que",
+				"question_text"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/home/ssh/Downloads/user.sql",
+			"settings":
+			{
+				"buffer_size": 2414,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "data_migration/src/migrateuser.py",
+			"settings":
+			{
+				"buffer_size": 646,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "__author__='sherwin.she'\n#\n_DEBUG=False\n\nimport utils\n\nif _DEBUG==True:\n	import pdb\n	pdb.set_trace()\n\nclass RoleMigration(object):\n	\"\"\"docstring for RoleMigration\"\"\"\n	def __init__(self, aps_conn,ausp_conn ):\n		super(RoleMigration, self).__init__()\n		self.aps_conn=aps_conn\n		self.ausp_conn=ausp_conn\n\n	def doMigration(self):\n		sql=\"select principal_id,attr_value from security_attribute a   where a.attr_name='principal.label' \\\n                and a.principal_id in(select principal_id from SECURITY_PRINCIPAL where  principal_type='role' )\"\n                aps_cur=None\n                ausp_cur=None\n                try:\n                        if _DEBUG==True:\n				pdb.set_trace()\n                	aps_cur=self.aps_conn.cursor()\n                      data=aps_cur.execute(sql)\n                	ausp_cur=self.ausp_conn.cursor()\n		        insertSql='insert ausp_org_role (c_id,c_code,c_name,c_state,c_remark,c_creator_id,c_create_time,c_modifier_id,c_modify_time)\\\n		        		    values(%s,%s,%s,%s,%s,%s,%s,%s,%s)'\n		        seq=1\n                	for d in data:\n	                	newID=utils.getNewID()\n	                	code=format(seq,'04d')\n	                	insertData=(newID,code,d[1],1,None,None,None,None,None)\n	                	ausp_cur.execute(insertSql,insertData)\n	                	print('insert '+d[1]+' now')\n	                	seq+=1\n		        self.ausp_conn.commit()\n                except Exception, e:\n                	raise e\n                finally:\n                	#aps_cur.close()\n                	#ausp_cur.close()\n                	pass\n",
+			"file": "data_migration/src/migraterole.py",
+			"file_size": 1564,
+			"file_write_time": 1465111246000000,
+			"settings":
+			{
+				"buffer_size": 1563,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 80.0,
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 528.0
+	},
+	"console":
+	{
+		"height": 139.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/ssh/code/szsf/data_migration/src/Human.py",
+		"/home/ssh/code/szsf/data_migration/src/apsmigration.py",
+		"/home/ssh/code/Human.py",
+		"/home/ssh/code/apsmigration.py",
+		"/home/ssh/code/migraterole.py",
+		"/home/ssh/code/migrateorgunit.py",
+		"/home/ssh/code/utils.py",
+		"/home/ssh/code/targetDB.py",
+		"/home/ssh/Downloads/user.sql",
+		"/home/ssh/code/apsmigrate.py",
+		"/home/ssh/Downloads/hello.py",
+		"/home/ssh/Downloads/hello",
+		"/tmp/pip-build/cx-Oracle/setup.py",
+		"/home/ssh/tmp/mysite/polls/views.py",
+		"/home/ssh/.config/sublime-text-2/Packages/Jedi - Python autocompletion/Default.sublime-keymap",
+		"/home/ssh/tmp/mysite/polls/admin.py",
+		"/home/ssh/tmp/rcode/hello.rb",
+		"/home/ssh/tmp/rcode/SongList.rb",
+		"/home/ssh/tmp/rcode/test.rb",
+		"/home/ssh/tmp/rcode/Song.rb",
+		"/home/ssh/tmp/mysite/polls/models.py",
+		"/home/ssh/tmp/mysite/templates/polls/detail.html",
+		"/home/ssh/tmp/mysite/polls/urls.py",
+		"/home/ssh/.config/sublime-text-2/Packages/Jedi - Python autocompletion/sublime_jedi.sublime-settings",
+		"/home/ssh/.config/sublime-text-2/Packages/SublimeCodeIntel/SublimeCodeIntel.sublime-settings",
+		"/home/ssh/.config/sublime-text-2/Packages/User/SublimeCodeIntel.sublime-settings",
+		"/home/ssh/tmp/mysite/manage.py",
+		"/home/ssh/.config/sublime-text-2/Packages/CTags/CTags.sublime-settings",
+		"/home/ssh/.config/sublime-text-2/Packages/User/CTags.sublime-settings",
+		"/home/ssh/tmp/mysite/static/polls/style.css",
+		"/home/ssh/tmp/mysite/templates/polls/index.html",
+		"/home/ssh/tmp/mysite/mysite/urls.py",
+		"/home/ssh/tmp/mysite/mysite/settings.py",
+		"/home/ssh/tmp/mysite/polls/test.py",
+		"/home/ssh/tmp/mysite/templates/base_site.html"
+	],
+	"find":
+	{
+		"height": 36.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"def",
+			"aps_db_desc",
+			"		\n",
+			"\n		"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/home/ssh/Downloads/user.sql",
+					"settings":
+					{
+						"buffer_size": 2414,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								831,
+								831
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SQL/SQL.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 120.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "data_migration/src/migrateuser.py",
+					"settings":
+					{
+						"buffer_size": 646,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								101,
+								101
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 59.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "data_migration/src/migraterole.py",
+					"settings":
+					{
+						"buffer_size": 1563,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								849,
+								849
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 240.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 158.0
+	},
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"setup",
+				"/tmp/pip-build/cx-Oracle/setup.py"
+			],
+			[
+				"",
+				"mysite/manage.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 229.0,
+	"status_bar_visible": true
+}
