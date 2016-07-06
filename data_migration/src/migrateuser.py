@@ -24,7 +24,7 @@ class UserMigration (object):
 
     def doMigration(self):
         self.migrateUserMainInfo()
-        self.ausp_conn.commit()
+        # self.ausp_conn.commit()
 
     def migrateUserMainInfo(self):
         sql = "select principal_name,principal_id,userpriority,username,userid,usergender,telephone, \
@@ -50,7 +50,10 @@ class UserMigration (object):
             validDay = datetime.date.today()
             invalidDay = datetime.date(
                 datetime.date.today().year+5, datetime.date.today().month, datetime.date.today().day)
-            defaultOrgUnit = "a6b2c76240b811e69a68000c291ffe15"
+            defaultOrgName = "深圳市司法局"
+            ausp_cur.execute("select c_id from ausp_org_unit where c_name='"+defaultOrgName+"'")
+            defaultOrgUnit=ausp_cur.fetchone()[0]
+
             for d in data:
                 now = datetime.datetime.now()
                 gender = None
@@ -74,7 +77,7 @@ class UserMigration (object):
                 # grant role to user
                 # self.grantRole2User(d)
         except Exception, e:
-        	self.ausp_conn.rollback()
+        	# self.ausp_conn.rollback()
             	raise e
         finally:
             pass

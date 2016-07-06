@@ -34,7 +34,7 @@ def doMigration(ausp_conn,orgData,parent_id,seq):
 		insertSql='insert into ausp_org_unit(c_id,c_name,c_short_name,c_parent_id,c_code,c_type,c_state,c_seq,\
                                      c_duty_id,c_comp_id,c_remark,c_creator_id,c_create_time,c_modifier_id,c_modify_time)\
                                       values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
-		cur=ausp_conn.cursor()
+		cur=ausp_conn.cursor()		
 		ausp_parent_id=None
 		ausp_parent_code=None
 	        if not parent_id is None:
@@ -50,7 +50,7 @@ def doMigration(ausp_conn,orgData,parent_id,seq):
 	        print(newData)
 	        cur.execute(insertSql,newData)
                 print('insert '+orgData[1]+' now')
-		ausp_conn.commit()
+		# ausp_conn.commit()
 	except Exception, e:
 		raise e
 	finally:
@@ -74,6 +74,7 @@ def getOrgIDFromAPSOrgID(ausp_conn,apsorgid):
 
 def  orgMigration(aps_conn,ausp_conn):
 	try:
+		ausp_conn.cursor().execute("delete from orgmapping")
 	      	rootNode_id=None
         	searchSourceTree(aps_conn,ausp_conn,rootNode_id)
         except Exception,e:

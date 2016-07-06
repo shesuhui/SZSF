@@ -46,8 +46,10 @@ def main():
 		role.doMigration()
 		user=migrateuser.UserMigration(aps_conn, ausp_conn)
 		user.doMigration()
+		ausp_conn.commit()
 	except Exception, e:
 		raise e
+		ausp_conn.rollback()
 	finally:
 		aps_conn.close()
 		ausp_conn.close()

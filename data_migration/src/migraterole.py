@@ -38,7 +38,7 @@ class RoleMigration(object):
 	                	if _PRINT==True:
 	                		print('insert '+d[1]+' now')
 	                	seq+=1
-		        self.ausp_conn.commit()
+		        # self.ausp_conn.commit()
                 except Exception, e:
                 	raise e
                 finally:
