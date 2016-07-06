@@ -32,8 +32,8 @@ def doMigration(ausp_conn,orgData,parent_id,seq):
 	cur=None
 	try:
 		insertSql='insert into ausp_org_unit(c_id,c_name,c_short_name,c_parent_id,c_code,c_type,c_state,c_seq,\
-                                     c_duty_id,c_comp_id,c_remark,c_creator_id,c_create_time,c_modifier_id,c_modify_time)\
-                                      values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+                                     c_duty_id,c_comp_id,c_remark,c_creator_id,c_create_time,c_modifier_id,c_modify_time,c_sync)\
+                                      values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
 		cur=ausp_conn.cursor()		
 		ausp_parent_id=None
 		ausp_parent_code=None
@@ -46,7 +46,7 @@ def doMigration(ausp_conn,orgData,parent_id,seq):
 	        print(org_code)
 	        #print(orgData)
 	        cur.execute("insert into orgMapping (principal_id,org_id,code) values("+str(orgData[0])+",'"+new_org_id+"','"+org_code+"')")
-	        newData=(new_org_id,orgData[1],orgData[1],ausp_parent_id,org_code,'1','1',seq,None,None,None,None,None,None,None)		      
+	        newData=(new_org_id,orgData[1],orgData[1],ausp_parent_id,org_code,'1','1',seq,None,None,None,None,utils.now(),None,utils.now(),'1')		      
 	        print(newData)
 	        cur.execute(insertSql,newData)
                 print('insert '+orgData[1]+' now')

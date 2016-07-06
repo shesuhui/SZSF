@@ -70,7 +70,7 @@ class UserMigration (object):
                 # insert Account Info*******************
                 newAccountID = utils.getNewID()
                 insertData = (newAccountID, newEmpID, d[3], d[0], d[
-                              0], None, defaultOrgUnit, "10", 1, "10", "10", validDay, invalidDay, None, now, None, now, "0")
+                              0], None, defaultOrgUnit, "10", 1, "10", "10", validDay, invalidDay, None, now, None, now, "1")
                 ausp_cur.execute(insertAccountSql, insertData)
                 if _PRINT == True:
                     print('insert account info  '+d[3]+' now')
