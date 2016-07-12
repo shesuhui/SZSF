@@ -1,0 +1,13 @@
+package com.apusic.webservice.systems;
+
+import java.util.Map;
+
+import com.apusic.webservice.model.FlowInfo;
+
+public interface SystemInterface {
+	
+	public String getSysName();
+	public FlowInfo getFlowInfoTest(Map<String, Object> args);
+	public FlowInfo getFlowInfo(Map<String, Object> args);
+	
+}

@@ -1,0 +1,238 @@
+package com.apusic.webservice.workflow;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
+import javax.portlet.PortletMode;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+import com.apusic.portal.bridges.common.GenericServletPortlet;
+import com.apusic.webservice.model.BeanMapper;
+import com.apusic.webservice.model.FlowInfo;
+import com.apusic.webservice.model.Info;
+import com.apusic.webservice.service.WorkFlowService;
+import com.apusic.webservice.service.impl.WorkFlowServiceImpl_back;
+
+public class WorkFlowPortlet extends GenericServletPortlet{
+	
+	ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+	private WorkFlowService workFlowService = (WorkFlowService) context.getBean("workFlowService");
+		
+	protected int TYPE;
+	protected String pageSizeName;
+	
+	private String dataType;//1表示模拟数据，2表示真实数据
+	
+	public void doView(RenderRequest request, RenderResponse response)
+			throws PortletException, IOException {
+		
+		this.putPreferencesToRender(request, response);
+		PortletPreferences pf = request.getPreferences();		
+		String viewStyle = pf.getValue("viewStyle", "1");
+		if(TYPE==1){
+			
+			if(viewStyle.equals("1")){
+				getPortletContext().getRequestDispatcher("/workflowView.jsp").include(request, response);
+			}else{
+				getPortletContext().getRequestDispatcher("/style2/view.jsp").include(request, response);
+			}
+		}	
+		else{
+			if(viewStyle.equals("1")){
+				getPortletContext().getRequestDispatcher("/workflowReadView.jsp").include(request, response);
+			}else{
+				getPortletContext().getRequestDispatcher("/style2/view.jsp").include(request, response);
+			}
+		}
+						
+	}
+	
+	
+	
+	public void doEdit(RenderRequest request, RenderResponse response)
+			throws PortletException, IOException {
+		this.putPreferencesToRender(request, response);
+		
+		String actionURL = response.createActionURL().toString();		
+		request.setAttribute("actionURL", actionURL);
+		
+		PortletPreferences pf = request.getPreferences();		
+		String viewStyle = pf.getValue("viewStyle", "1");
+		if(viewStyle.equals("1")){
+			getPortletContext().getRequestDispatcher("/workflowEdit.jsp").include(request, response);
+		}else{
+			getPortletContext().getRequestDispatcher("/style2/indexEdit.jsp").include(request, response);
+		}
+	}
+
+
+
+	private void putPreferencesToRender(RenderRequest request, RenderResponse response){
+		
+		request.setAttribute("type", TYPE);
+		String nameSpace = response.getNamespace();
+		request.setAttribute("NS", nameSpace);
+		PortletPreferences pf = request.getPreferences();
+						
+		String title = pf.getValue("portletTitle", "workflow_default");
+		String viewStyle = pf.getValue("viewStyle", "1");
+		String moreUrl = pf.getValue("moreUrl", "#");//点击更多的跳转url
+		String viewNum = pf.getValue("viewNum", "7");//首页的待办待阅一页显示个数
+		String pageSize = pf.getValue(pageSizeName, "6");
+		String domain = pf.getValue("domain", "http://10.40.33.20:81");
+	    dataType = pf.getValue("dataType", "1");
+
+		request.setAttribute("portletTitle", title);
+		request.setAttribute("viewStyle", viewStyle);
+		request.setAttribute("moreUrl", moreUrl);
+		request.setAttribute("viewNum", viewNum);
+		request.setAttribute("pageSize", pageSize);
+		request.setAttribute("pageSizeName", pageSizeName);	
+		request.setAttribute("domain", domain);	
+		request.setAttribute("dataType", dataType);	
+		
+		response.setTitle(title);	
+		
+	}
+
+	public void processAction(ActionRequest request, ActionResponse response)
+			throws PortletException, IOException {
+		
+		PortletMode mode = new PortletMode("edit_defauls");
+
+		String title = request.getParameter("title");
+		String viewStyle = request.getParameter("viewStyle");
+		String moreUrl = request.getParameter("moreUrl");
+		String viewNum = request.getParameter("viewNum");
+		String pageSize = request.getParameter(pageSizeName);
+		String domain = request.getParameter("domain");
+	
+		dataType = request.getParameter("dataType");
+		
+
+		PortletPreferences pf = request.getPreferences();
+
+		pf.setValue("portletTitle", title);
+		pf.setValue("viewStyle", viewStyle);
+		if(moreUrl!=null)
+			pf.setValue("moreUrl", moreUrl);
+		if(viewNum!=null)
+			pf.setValue("viewNum", viewNum);
+		pf.setValue(pageSizeName, pageSize);
+		pf.setValue("domain", domain);
+		pf.setValue("dataType", dataType);
+						
+		pf.store();
+		mode = new PortletMode(PortletMode.VIEW.toString());
+		response.setPortletMode(mode);
+
+	}
+	
+	
+	@Override
+	public void serveResource(ResourceRequest request, ResourceResponse response)
+			throws PortletException, IOException {
+		
+		String method = request.getParameter("method");
+		
+		String userName = "";
+		if(request.getUserPrincipal()!=null){
+			userName = request.getUserPrincipal().getName();
+		}
+		
+		PortletPreferences pf = request.getPreferences();		
+		int pageSize = Integer.parseInt(pf.getValue(pageSizeName, "6"));
+		
+		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
+		
+		Map<String, Object> args = new HashMap<String, Object>();
+		args.put("userAccount", userName);
+		args.put("type", TYPE);
+		args.put("pageNum", pageNum);
+		args.put("pageSize", pageSize);
+		args.put("categoryIds", "");
+		args.put("formsetIds", "");
+		
+		if(method.equals("pageList")){
+												
+			if(dataType.equals("1")){
+				//模拟数据
+				//System.out.println("模拟");
+				
+				List<FlowInfo> flowInfoList = workFlowService.getFlowInfoTest(args);	
+				response.getWriter().write(BeanMapper.listToJson(flowInfoList));
+				//System.out.println(BeanMapper.listToJson(flowInfoList));
+				
+			}else if(dataType.equals("2")){
+				//真实数据
+			
+				List<FlowInfo> flowInfoList = workFlowService.getFlowInfoList(args);
+				response.getWriter().write(BeanMapper.listToJson(flowInfoList));
+				//System.out.println(BeanMapper.listToJson(flowInfoList));
+			}
+		}else if(method.equals("turnPage")){
+			//如果请求为翻页
+			String systemName = request.getParameter("systemName");
+			//System.out.println("pageNum="+pageNum+" systemName="+systemName);
+			
+			FlowInfo flowInfo = workFlowService.getFlowInfo(args, systemName);
+			response.getWriter().write(BeanMapper.beanToJson(flowInfo));
+		}
+		
+		
+		
+		
+	}
+
+
+
+	protected void doDispatch(RenderRequest request, RenderResponse response) throws PortletException, IOException{
+		
+		String portletMode = request.getPortletMode().toString();
+		
+		if(portletMode.equals("edit_defaults")){
+			 doEdit(request, response);
+		}else if(portletMode.equals(PortletMode.VIEW.VIEW.toString())){
+			doView(request, response);
+		}else if(portletMode.equals(PortletMode.VIEW.EDIT.toString())){
+			doEdit(request, response);
+		}
+		
+	}
+
+
+	
+	
+	
+	
+}

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="GBK"?>
+<Response>
+	<ResponseCode>1</ResponseCode>
+	<ResponseText>返回说明（如：成功）</ResponseText>
+	<ResponseData>
+		<info-list>
+		<total-page>1</total-page>
+		<total-record>2</total-record>
+		<page-num>1</page-num>
+		<page-size>2</page-size>
+		<info>
+			<!-- 公文实例id -->
+			<docInstId>29407</docInstId>
+			<!-- 当前工作项id -->
+			<workItemId>352035</workItemId>
+			<!-- 公文标题 -->
+			<title>通知3</title>
+			<!-- 接收时间 -->
+			<receive-time>2009-03-27 08:26:41</receive-time>
+			<!-- 紧急程度 -->
+			<rank>普通</rank>
+			<!-- 公文种类 -->
+			<formset-name>部门发文</formset-name>
+			<!-- 当前步骤 -->
+			<current-step>传阅</current-step>
+			<!-- 完成时间 -->
+			<complete-time></complete-time>
+		</info>
+		<info>
+			<!-- 公文实例id -->
+			<docInstId>21860</docInstId>
+			<!-- 当前工作项id -->
+			<workItemId>248419</workItemId>
+			<!-- 公文标题 -->
+			<title>关于组织3</title>
+			<!-- 接收时间 -->
+			<receive-time>2009-05-28 10:35:20</receive-time>
+			<!-- 紧急程度 -->
+			<rank>普通</rank>
+			<!-- 公文种类 -->
+			<formset-name>市局发文</formset-name>
+			<!-- 当前步骤 -->
+			<current-step>传阅</current-step>
+			<!-- 完成时间 -->
+			<complete-time></complete-time>
+		</info>
+		
+	</info-list>
+	</ResponseData>
+</Response>

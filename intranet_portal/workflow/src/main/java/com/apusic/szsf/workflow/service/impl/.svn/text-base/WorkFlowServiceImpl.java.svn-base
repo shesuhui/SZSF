@@ -1,0 +1,73 @@
+package com.apusic.webservice.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import com.apusic.webservice.model.FlowInfo;
+import com.apusic.webservice.service.WorkFlowService;
+import com.apusic.webservice.systems.SystemInterface;
+
+public class WorkFlowServiceImpl implements WorkFlowService{
+
+	private List<SystemInterface> systems;
+
+	
+	//获取模拟数据
+	public List<FlowInfo> getFlowInfoTest(Map<String, Object> args) {
+	
+		List<FlowInfo> flowInfoList = new ArrayList();
+		int systemSize = systems.size();
+
+		for(SystemInterface si:systems){
+			FlowInfo flowInfo = si.getFlowInfoTest(args);
+			flowInfoList.add(flowInfo);
+		}
+		
+		return flowInfoList;
+	}
+
+	//获取多个系统
+	public List<FlowInfo> getFlowInfoList(Map<String,Object> args) {
+		
+		List<FlowInfo> flowInfoList = new ArrayList();
+		
+		for(SystemInterface si:systems){
+			FlowInfo flowInfo = si.getFlowInfo(args);
+			if(flowInfo!=null)
+				flowInfoList.add(flowInfo);
+		}
+		
+		return flowInfoList;
+	}
+
+	//获取一个系统的数据
+	public FlowInfo getFlowInfo(Map<String, Object> args,String systemName) {
+	
+		FlowInfo flowInfo = new FlowInfo();
+		
+		for(SystemInterface si:systems){
+			String sys = si.getSysName();
+			if(sys.equals(systemName)){
+				flowInfo = si.getFlowInfo(args);
+			}
+			
+		}
+		return flowInfo;
+	}
+	
+	
+	public void setSystems(List<SystemInterface> systems) {
+		this.systems = systems;
+	}
+
+	
+
+	
+
+
+	
+	
+}

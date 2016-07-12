@@ -1,0 +1,16 @@
+package com.apusic.webservice.workflow;
+
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+
+public class WaittingProcPortlet extends WorkFlowPortlet{
+
+	@Override
+	public void init(PortletConfig config) throws PortletException {
+		super.TYPE = 1;//选择待办
+		super.pageSizeName = "pageSize"+TYPE;
+		super.init(config);
+	}
+	
+	
+}

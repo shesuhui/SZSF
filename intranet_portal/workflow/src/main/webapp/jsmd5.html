@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jquery md5 demo</title>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jQuery.md5.js"></script>
+<script>
+	function md5(){
+		pwd=$("#password").val();
+		salt="szsfj";
+		alert("原值:"+pwd+" 加密后:"+$.md5(pwd+salt));
+	}
+</script>
+</head>
+<body>
+   用户名:<input id="username" type="text"></input>
+ 密码:  <input id="password" type="password"></input>
+   <button type="button" onclick="md5()">加密</button>
+
+</body>
+</html>
