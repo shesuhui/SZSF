@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="GBK"?>
+<Response>
+	<ResponseCode>1</ResponseCode>
+	<ResponseText>返回说明（如：成功）</ResponseText>
+	<ResponseData>
+	<info-list>
+		<total-page>26</total-page>
+		<total-record>155</total-record>
+		<page-num>1</page-num>
+		<page-size>6</page-size>
+		<info>
+			<!-- 公文实例id -->
+			<docInstId>125137</docInstId>
+			<!-- 当前工作项id -->
+			<workItemId>1554679</workItemId>
+			<!-- 公文标题 -->
+			<title>转发《关于全省司法行政系统首届文化艺术节之语言艺术大赛的通知》的通知</title>
+			<!-- 接收时间 -->
+			<receive-time>2013-07-22 12:21:37</receive-time>
+			<!-- 紧急程度 -->
+			<rank>加急</rank>
+			<!-- 公文种类 -->
+			<formset-name>发文</formset-name>
+			<!-- 当前步骤 -->
+			<current-step>发文</current-step>
+			<!-- 完成时间 -->
+			<complete-time></complete-time>
+		</info>
+		<info>
+			<!-- 公文实例id -->
+			<docInstId>124781</docInstId>
+			<!-- 当前工作项id -->
+			<workItemId>1553605</workItemId>
+			<!-- 公文标题 -->
+			<title>深圳市监察局关于印发《2013年广东省网上办事大厅深圳分厅建设及网上办事效能测评指标体系（试行）》的通知</title>
+			<!-- 接收时间 -->
+			<receive-time>2013-07-19 11:54:18</receive-time>
+			<!-- 紧急程度 -->
+			<rank>普通</rank>
+			<!-- 公文种类 -->
+			<formset-name>收文</formset-name>
+			<!-- 当前步骤 -->
+			<current-step>内部办理</current-step>
+			<!-- 完成时间 -->
+			<complete-time></complete-time>
+		</info>
+		<info>
+			<!-- 公文实例id -->
+			<docInstId>124964</docInstId>
+			<!-- 当前工作项id -->
+			<workItemId>1553603</workItemId>
+			<!-- 公文标题 -->
+			<title>市信息化工作领导小组办公室关于开展2013年深圳市重点领域信息安全检查的通知</title>
+			<!-- 接收时间 -->
+			<receive-time>2013-07-19 11:52:43</receive-time>
+			<!-- 紧急程度 -->
+			<rank>特急</rank>
+			<!-- 公文种类 -->
+			<formset-name>收文</formset-name>
+			<!-- 当前步骤 -->
+			<current-step>内部办理</current-step>
+			<!-- 完成时间 -->
+			<complete-time></complete-time>
+		</info>
+		<info>
+			<!-- 公文实例id -->
+			<docInstId>124429</docInstId>
+			<!-- 当前工作项id -->
+			<workItemId>1551413</workItemId>
+			<!-- 公文标题 -->
+			<title>市公证处2013年第二季度的信息保密与安全绩效评估申报</title>
+			<!-- 接收时间 -->
+			<receive-time>2013-07-18 10:05:42</receive-time>
+			<!-- 紧急程度 -->
+			<rank>普通</rank>
+			<!-- 公文种类 -->
+			<formset-name>信息安全报送</formset-name>
+			<!-- 当前步骤 -->
+			<current-step>信息化办</current-step>
+			<!-- 完成时间 -->
+			<complete-time></complete-time>
+		</info>
+		<info>
+			<!-- 公文实例id -->
+			<docInstId>124614</docInstId>
+			<!-- 当前工作项id -->
+			<workItemId>1551407</workItemId>
+			<!-- 公文标题 -->
+			<title>一所行政与装备科2013年第二季度的信息保密与安全绩效评估申报</title>
+			<!-- 接收时间 -->
+			<receive-time>2013-07-18 10:01:05</receive-time>
+			<!-- 紧急程度 -->
+			<rank>普通</rank>
+			<!-- 公文种类 -->
+			<formset-name>信息安全报送</formset-name>
+			<!-- 当前步骤 -->
+			<current-step>信息化办</current-step>
+			<!-- 完成时间 -->
+			<complete-time></complete-time>
+		</info>
+		<info>
+			<!-- 公文实例id -->
+			<docInstId>124642</docInstId>
+			<!-- 当前工作项id -->
+			<workItemId>1549541</workItemId>
+			<!-- 公文标题 -->
+			<title>王荣、覃卫东、张虎同志在全市党的群众路线教育实践活动工作会议上的讲话 12</title>
+			<!-- 接收时间 -->
+			<receive-time>2013-07-16 13:49:59</receive-time>
+			<!-- 紧急程度 -->
+			<rank>普通</rank>
+			<!-- 公文种类 -->
+			<formset-name>待办公文</formset-name>
+			<!-- 当前步骤 -->
+			<current-step>收文</current-step>
+			<!-- 完成时间 -->
+			<complete-time></complete-time>
+		</info>
+	</info-list>
+	</ResponseData>
+</Response>
