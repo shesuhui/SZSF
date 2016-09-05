@@ -37,7 +37,7 @@ def main():
 		if conn is None:
 			conn=getConnection(db_desc)
 		        #print("success get aps_conn")
-	        # migrateorgfromOA.orgMigration(conn,ausp_conn)
+	        migrateorgfromOA.orgMigration(conn,ausp_conn)
 	        userMigrate=migrateuserfromOA.UserMigration(conn,ausp_conn)
 	        userMigrate.doMigration()
 	        ausp_conn.commit()

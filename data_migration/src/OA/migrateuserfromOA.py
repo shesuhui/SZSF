@@ -29,7 +29,7 @@ class UserMigration (object):
 
     def migrateUserMainInfo(self):
         sql = "select id,account,name,password,orgid,priority,status,nickname,phone,fax,gender,\
-        mobile from v_userinfo where account<>'admin'"
+        mobile from t_userinfo where account<>'admin' and orgid is not null"
         aps_cur = None
         ausp_cur = None
         try:
@@ -52,7 +52,7 @@ class UserMigration (object):
             invalidDay = datetime.date(
                 datetime.date.today().year+20, datetime.date.today().month, datetime.date.today().day)
             # if user has no defaultOrgUnit then give a default one
-            defaultOrgName = "临时组织"
+            defaultOrgName = "停用帐号"
             ausp_cur.execute("select c_id from ausp_org_unit where c_name='"+defaultOrgName+"'")
             defaultOrgUnit=ausp_cur.fetchone()[0]
 
@@ -68,6 +68,8 @@ class UserMigration (object):
                 rowSet=ausp_cur.fetchone()
                 if not rowSet is None:
                     defaultOrgUnit=rowSet[0]
+                else:
+                    continue
                 # insert employee info******************
                 newEmpID = utils.getNewID()
                 insertData = (newEmpID, d[2], defaultOrgUnit, d[5], None, gender, None, None, None, None, None, None, d[8], None, d[11], None, d[9], None, None,

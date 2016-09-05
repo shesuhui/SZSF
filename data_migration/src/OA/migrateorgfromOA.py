@@ -14,7 +14,7 @@ def  searchSourceTree(db_conn,ausp_conn,parent_id):
 	sql=None
 	if _PRINT==True:
 		print(parent_id)
-	sql="select id,orgname,parentid,parentname,type from v_org where parentid='"+str(parent_id)+"'  order by parentid"  
+	sql="select id,orgname,parentid,parentname,type from t_orginfo where parentid='"+str(parent_id)+"'  order by parentid,priority"  
    	cur=None
    	if _PRINT==True:
    		print(sql)
